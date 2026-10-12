@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Student Registration | Smart College</title>
+<style>
+:root{--navy:#10264b;--blue:#315efb;--muted:#64748b;--line:#dbe3ef}
+*{box-sizing:border-box}body{margin:0;background:#f4f7fb;color:#172033;font-family:Inter,system-ui,Segoe UI,sans-serif}
+header{background:linear-gradient(120deg,#10264b,#244b91);color:white;padding:24px max(22px,calc((100% - 1080px)/2));font-weight:800;font-size:20px}
+main{max-width:1080px;margin:32px auto;padding:0 22px;display:grid;grid-template-columns:.85fr 1.15fr;gap:28px;align-items:start}
+.intro{color:#17305c;padding:20px 4px}.pill{display:inline-block;border:1px solid #9ab2fb;border-radius:30px;padding:7px 12px;font-size:12px;color:#315efb;font-weight:700}
+h1{font-size:clamp(30px,4vw,46px);line-height:1.08;margin:18px 0 12px}.intro p{line-height:1.7;color:#64748b}
+.card{background:white;border:1px solid #e7ecf4;border-radius:20px;padding:28px;box-shadow:0 18px 55px #0f23440f}
+h2{margin:0 0 7px}.sub{margin:0 0 22px;color:var(--muted);font-size:14px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.field{display:flex;flex-direction:column;gap:7px}.wide{grid-column:1/-1}label{font-size:13px;font-weight:650;color:#344256}
+input,select,textarea{width:100%;border:1px solid #d6deea;border-radius:10px;padding:12px 13px;font:inherit;font-size:14px;background:white}
+input:focus,select:focus,textarea:focus{outline:2px solid #315efb30;border-color:var(--blue)}textarea{min-height:80px;resize:vertical}
+button{width:100%;border:0;border-radius:11px;background:var(--blue);color:white;padding:14px;font-weight:750;font-size:15px;cursor:pointer;margin-top:20px}
+.notice{padding:12px;border-radius:10px;margin-bottom:15px;font-size:13px}.error{background:#fff1f2;color:#9f1239}
+footer{max-width:1080px;margin:auto;padding:0 22px 28px;color:#7b8798;font-size:12px}
+@media(max-width:780px){main{grid-template-columns:1fr;margin-top:18px}.intro{padding:0}.card{padding:22px}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.wide{grid-column:auto}}
+</style></head><body>
+<header>✦ Smart College <span style="font-weight:400;color:#dbeafe">| Admissions</span></header>
+<main><section class="intro"><span class="pill">STUDENT REGISTRATION PORTAL</span>
+<h1>Your next chapter starts here.</h1><p>Complete the form to submit your student registration. Our admissions team will receive your details for processing.</p>
+<p>✓ Simple online application<br>✓ Secure submission<br>✓ Student support</p></section>
+<section class="card"><h2>Student registration</h2><p class="sub">Fields marked * are required.</p>
+{% with messages = get_flashed_messages(with_categories=true) %}{% for category,message in messages %}<div class="notice {{category}}">{{message}}</div>{% endfor %}{% endwith %}
+<form action="/register" method="post"><div class="grid">
+<div class="field wide"><label for="name">Full name *</label><input id="name" name="name" required maxlength="100" autocomplete="name" value="{{form.get('name','')}}" placeholder="e.g. Aditi Sharma"></div>
+<div class="field"><label for="email">Email address *</label><input id="email" name="email" type="email" required maxlength="254" value="{{form.get('email','')}}" placeholder="you@example.com"></div>
+<div class="field"><label for="phone">Phone number *</label><input id="phone" name="phone" type="tel" required maxlength="20" value="{{form.get('phone','')}}" placeholder="+91 98765 43210"></div>
+<div class="field"><label for="course">Course *</label><select id="course" name="course" required><option value="">Select course</option>{% for course in courses %}<option value="{{course}}" {% if form.get('course')==course %}selected{% endif %}>{{course}}</option>{% endfor %}</select></div>
+<div class="field"><label for="date_of_birth">Date of birth *</label><input id="date_of_birth" name="date_of_birth" type="date" max="{{today}}" required value="{{form.get('date_of_birth','')}}"></div>
+<div class="field"><label for="city">City *</label><input id="city" name="city" required maxlength="80" value="{{form.get('city','')}}" placeholder="e.g. Indore"></div>
+<div class="field wide"><label for="address">Address (optional)</label><textarea id="address" name="address" maxlength="300" placeholder="House / street / locality">{{form.get('address','')}}</textarea></div>
+</div><button type="submit">Submit registration →</button></form></section></main>
+<footer>© Smart College Management System · Student registration demo</footer></body></html>
